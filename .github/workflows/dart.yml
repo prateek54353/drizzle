@@ -25,17 +25,30 @@ jobs:
         run: pod repo update
         working-directory: ios
 
+      - name: Disable Code Signing
+        run: |
+          sed -i '' 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' 's/DEVELOPMENT_TEAM = .*;/DEVELOPMENT_TEAM = "";/g' ios/Runner.xcodeproj/project.pbxproj
+
+      - name: Check Signing Configuration
+        run: |
+          grep -R "DEVELOPMENT_TEAM" ios/Runner.xcodeproj/project.pbxproj || true
+          grep -R "CODE_SIGN_STYLE" ios/Runner.xcodeproj/project.pbxproj || true
+
       - name: Build iOS
-        run: flutter build ios --release --no-codesign
+        run: |
+          flutter build ios \
+            --release \
+            --no-codesign
         env:
           CODE_SIGNING_ALLOWED: NO
           CODE_SIGNING_REQUIRED: NO
 
-      - name: Create Payload
+      - name: Create Payload Folder
         run: mkdir Payload
         working-directory: build/ios/iphoneos
 
-      - name: Move Runner.app
+      - name: Move App Into Payload
         run: mv Runner.app Payload/
         working-directory: build/ios/iphoneos
 
@@ -43,7 +56,7 @@ jobs:
         run: zip -qq -r -9 FlutterIpaExport.ipa Payload
         working-directory: build/ios/iphoneos
 
-      - name: Upload IPA
+      - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Flutter-iOS-IPA
