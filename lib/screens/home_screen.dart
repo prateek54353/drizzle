@@ -198,6 +198,7 @@ class _LoadedContent extends StatelessWidget {
           ),
         ],
       ),
+    )
     );
   }
 }
