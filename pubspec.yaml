@@ -33,7 +33,28 @@ dev_dependencies:
   # Testing dependencies
   mockito: ^5.4.4
   build_runner: ^2.4.8
+  
+  # Launcher icons
+  flutter_launcher_icons: ^0.13.1
 
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/logo.png
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+  windows:
+    generate: true
+  macos:
+    generate: true
+  linux:
+    generate: true
+  image_path: "assets/logo.png"
+  adaptive_icon_background: "#2196F3"
+  adaptive_icon_foreground: "assets/logo.png"
+  remove_alpha_ios: true
