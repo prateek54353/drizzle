@@ -129,7 +129,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     child: ListTile(
                       title: const Text('Drizzle'),
-                      subtitle: const Text('Version 1.0.0'),
+                      subtitle: const Text('Version 1.0.1'),
                       leading: const Icon(Icons.info_outline),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => Navigator.pushNamed(context, '/about'),
