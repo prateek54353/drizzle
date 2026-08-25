@@ -178,6 +178,14 @@ Before the first Android release, add these GitHub Actions secrets:
 The Android artifacts are suitable for IzzyOnDroid after the corresponding tag
 has been reviewed and the attached APK for the target ABI is selected.
 
+## IzzyOnDroid metadata
+
+Store-listing metadata lives in `fastlane/metadata/android/en-US/`. Update the
+short description, full description, and `changelogs/<versionCode>.txt` before
+creating each release tag. Add PNG or JPG phone screenshots under
+`fastlane/metadata/android/en-US/images/phoneScreenshots/` before submitting to
+IzzyOnDroid.
+
 ## Configuration
 
 ### Platform Permissions

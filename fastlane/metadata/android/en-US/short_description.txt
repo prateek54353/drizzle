@@ -1,0 +1,1 @@
+A simple, privacy-friendly weather app with forecasts and saved places.

@@ -1,0 +1,16 @@
+<p>Drizzle is a modern, minimal weather app that helps you check current conditions and plan ahead.</p>
+
+<b>Features</b>
+<ul>
+<li>Current weather, feels-like temperature, humidity, wind, UV index, and visibility</li>
+<li>24-hour forecast with precipitation probability</li>
+<li>Seven-day forecast with daily high and low temperatures</li>
+<li>Search for cities worldwide and save favourite locations</li>
+<li>Compare weather across saved locations</li>
+<li>Sunrise and sunset information</li>
+<li>Light, dark, and system themes</li>
+<li>Temperature and wind-speed unit preferences</li>
+<li>Offline access to recently cached weather data</li>
+</ul>
+
+<p>Weather data is provided by Open-Meteo. Drizzle does not require an account or an API key.</p>
