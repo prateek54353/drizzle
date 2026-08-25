@@ -52,7 +52,7 @@ class AboutScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Version 1.0.2',
+                    'Version 1.0.3',
                     style: Theme.of(context).textTheme.bodyLarge
                         ?.copyWith(color: colorScheme.onSurfaceVariant),
                   ),
