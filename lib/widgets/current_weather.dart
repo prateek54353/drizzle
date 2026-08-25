@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/weather.dart';
-import '../core/constants/weather_conditions.dart';
 
 class CurrentWeather extends StatelessWidget {
   final Weather weather;
@@ -39,7 +38,7 @@ class CurrentWeather extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              weather.condition.icon,
+              weather.conditionIcon,
               style: const TextStyle(fontSize: 64),
             ),
             const SizedBox(height: 8),
@@ -56,7 +55,7 @@ class CurrentWeather extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              weather.condition.displayName,
+              weather.conditionDisplayName,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),

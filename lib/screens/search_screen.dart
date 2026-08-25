@@ -89,6 +89,19 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
+  Future<void> _addToFavorites(Location location) async {
+    final provider = context.read<WeatherProvider>();
+    await provider.addFavoriteLocation(location);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${location.displayName} added to favorites'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,6 +184,7 @@ class _SearchScreenState extends State<SearchScreen> {
         return _LocationTile(
           location: location,
           onTap: () => _selectLocation(location),
+          onFavorite: () => _addToFavorites(location),
         );
       },
     );
@@ -220,6 +234,7 @@ class _SearchScreenState extends State<SearchScreen> {
               return _LocationTile(
                 location: location,
                 onTap: () => _selectLocation(location),
+                onFavorite: () => _addToFavorites(location),
               );
             },
           ),
@@ -232,10 +247,12 @@ class _SearchScreenState extends State<SearchScreen> {
 class _LocationTile extends StatelessWidget {
   final Location location;
   final VoidCallback onTap;
+  final VoidCallback? onFavorite;
 
   const _LocationTile({
     required this.location,
     required this.onTap,
+    this.onFavorite,
   });
 
   @override
@@ -244,7 +261,18 @@ class _LocationTile extends StatelessWidget {
       leading: const Icon(Icons.location_on),
       title: Text(location.name),
       subtitle: Text(location.displayName),
-      trailing: const Icon(Icons.chevron_right),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (onFavorite != null)
+            IconButton(
+              icon: const Icon(Icons.favorite_border),
+              onPressed: onFavorite,
+              tooltip: 'Add to favorites',
+            ),
+          const Icon(Icons.chevron_right),
+        ],
+      ),
       onTap: onTap,
     );
   }

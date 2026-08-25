@@ -63,6 +63,9 @@ class Weather {
     return '${hours}h ${minutes}m';
   }
 
+  String get conditionDisplayName => condition.displayName;
+  String get conditionIcon => condition.icon;
+
   Map<String, dynamic> toJson() {
     return {
       'temperature': temperature,

@@ -32,6 +32,9 @@ class HourlyForecast {
            time.hour == now.hour;
   }
 
+  String get conditionDisplayName => condition.displayName;
+  String get conditionIcon => condition.icon;
+
   Map<String, dynamic> toJson() {
     return {
       'time': time.toIso8601String(),
@@ -92,6 +95,9 @@ class DailyForecast {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return days[date.weekday - 1];
   }
+
+  String get conditionDisplayName => condition.displayName;
+  String get conditionIcon => condition.icon;
 
   Map<String, dynamic> toJson() {
     return {

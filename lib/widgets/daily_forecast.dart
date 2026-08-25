@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/forecast.dart';
-import '../core/constants/weather_conditions.dart';
 
 class DailyForecastWidget extends StatelessWidget {
   final List<DailyForecast> forecasts;
@@ -31,8 +30,8 @@ class DailyForecastWidget extends StatelessWidget {
 
         return _DailyItem(
           day: forecast.dayName,
-          icon: forecast.condition.icon,
-          condition: forecast.condition.displayName,
+          icon: forecast.conditionIcon,
+          condition: forecast.conditionDisplayName,
           lowTemperature: '${lowTemp.round()}$tempUnit',
           highTemperature: '${highTemp.round()}$tempUnit',
           rainProbability: forecast.precipitationProbability,

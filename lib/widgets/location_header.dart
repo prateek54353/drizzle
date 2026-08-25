@@ -5,12 +5,14 @@ class LocationHeader extends StatelessWidget {
   final Location location;
   final VoidCallback? onSearchPressed;
   final VoidCallback? onSettingsPressed;
+  final VoidCallback? onLocationsPressed;
 
   const LocationHeader({
     super.key,
     required this.location,
     this.onSearchPressed,
     this.onSettingsPressed,
+    this.onLocationsPressed,
   });
 
   @override
@@ -31,6 +33,12 @@ class LocationHeader extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          if (onLocationsPressed != null)
+            IconButton(
+              icon: const Icon(Icons.bookmark_border),
+              onPressed: onLocationsPressed,
+              tooltip: 'Saved Locations',
+            ),
           if (onSearchPressed != null)
             IconButton(
               icon: const Icon(Icons.search),

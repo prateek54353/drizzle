@@ -7,6 +7,7 @@ import '../widgets/weather_details.dart';
 import '../widgets/hourly_forecast.dart' show HourlyForecastWidget;
 import '../widgets/daily_forecast.dart' show DailyForecastWidget;
 import '../widgets/sunrise_sunset.dart';
+import '../models/location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,16 +17,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedLocationIndex = 0;
+  List<Location> _favoriteLocations = [];
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<WeatherProvider>().initialize();
+      _loadFavoriteLocations();
     });
+  }
+
+  Future<void> _loadFavoriteLocations() async {
+    final provider = context.read<WeatherProvider>();
+    final favorites = await provider.getFavoriteLocations();
+    if (mounted) {
+      setState(() {
+        _favoriteLocations = favorites;
+      });
+    }
   }
 
   Future<void> _refresh() async {
     await context.read<WeatherProvider>().refresh();
+    await _loadFavoriteLocations();
+  }
+
+  Future<void> _switchLocation(Location location) async {
+    await context.read<WeatherProvider>().selectLocation(location);
+    await _loadFavoriteLocations();
   }
 
   @override
@@ -42,6 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
               return _LoadedContent(
                 provider: provider,
                 onRefresh: _refresh,
+                onSwitchLocation: _switchLocation,
+                favoriteLocations: _favoriteLocations,
+                selectedLocationIndex: _selectedLocationIndex,
+                onLocationIndexChanged: (index) {
+                  setState(() {
+                    _selectedLocationIndex = index;
+                  });
+                },
               );
             case WeatherState.error:
               return _ErrorState(
@@ -69,10 +98,18 @@ class _LoadingState extends StatelessWidget {
 class _LoadedContent extends StatelessWidget {
   final WeatherProvider provider;
   final Future<void> Function() onRefresh;
+  final Future<void> Function(Location) onSwitchLocation;
+  final List<Location> favoriteLocations;
+  final int selectedLocationIndex;
+  final Function(int) onLocationIndexChanged;
 
   const _LoadedContent({
     required this.provider,
     required this.onRefresh,
+    required this.onSwitchLocation,
+    required this.favoriteLocations,
+    required this.selectedLocationIndex,
+    required this.onLocationIndexChanged,
   });
 
   @override
@@ -101,7 +138,21 @@ class _LoadedContent extends StatelessWidget {
                   onSettingsPressed: () {
                     Navigator.pushNamed(context, '/settings');
                   },
+                  onLocationsPressed: () {
+                    Navigator.pushNamed(context, '/locations');
+                  },
                 ),
+                if (favoriteLocations.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  _LocationSelector(
+                    locations: favoriteLocations,
+                    selectedIndex: selectedLocationIndex,
+                    onLocationSelected: (index) async {
+                      onLocationIndexChanged(index);
+                      await onSwitchLocation(favoriteLocations[index]);
+                    },
+                  ),
+                ],
                 const SizedBox(height: 24),
                 CurrentWeather(
                   weather: weather,
@@ -254,6 +305,67 @@ class _ErrorState extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _LocationSelector extends StatelessWidget {
+  final List<Location> locations;
+  final int selectedIndex;
+  final Function(int) onLocationSelected;
+
+  const _LocationSelector({
+    required this.locations,
+    required this.selectedIndex,
+    required this.onLocationSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: locations.length,
+        itemBuilder: (context, index) {
+          final location = locations[index];
+          final isSelected = index == selectedIndex;
+          
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: FilterChip(
+              label: Text(location.displayName),
+              selected: isSelected,
+              onSelected: (selected) {
+                if (selected) {
+                  onLocationSelected(index);
+                }
+              },
+              avatar: location.tag != null
+                  ? Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          location.tag![0].toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : null,
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/forecast.dart';
-import '../core/constants/weather_conditions.dart';
 
 class HourlyForecastWidget extends StatelessWidget {
   final List<HourlyForecast> forecasts;
@@ -33,7 +32,7 @@ class HourlyForecastWidget extends StatelessWidget {
 
           return _HourlyItem(
             time: forecast.time,
-            icon: forecast.condition.icon,
+            icon: forecast.conditionIcon,
             temperature: '${temp.round()}$tempUnit',
             rainProbability: forecast.precipitationProbability,
             isCurrentHour: isCurrentHour,

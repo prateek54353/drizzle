@@ -26,6 +26,7 @@ class WeatherProvider with ChangeNotifier {
   Location? _currentLocation;
   String? _errorMessage;
   bool _isCached = false;
+  final Map<String, Map<String, dynamic>> _locationWeatherData = {};
 
   WeatherProvider({
     WeatherService? weatherService,
@@ -255,11 +256,113 @@ class WeatherProvider with ChangeNotifier {
   Future<void> selectLocation(Location location) async {
     await _storageService.saveSelectedLocation(location);
     await _storageService.saveRecentLocation(location);
+    
+    // Also store in location weather data for comparison
+    final data = await _weatherService.getCompleteWeatherData(
+      location.latitude,
+      location.longitude,
+    );
+
+    _locationWeatherData[location.name] = {
+      'current': data['current'] as Weather,
+      'hourly': data['hourly'] as List<HourlyForecast>,
+      'daily': data['daily'] as List<DailyForecast>,
+      'location': location,
+    };
+    
     await loadWeatherForLocation(location);
   }
 
   Future<List<Location>> getRecentLocations() async {
     return await _storageService.getRecentLocations();
+  }
+
+  // Favorite locations management
+  Future<List<Location>> getFavoriteLocations() async {
+    return await _storageService.getFavoriteLocations();
+  }
+
+  Future<void> addFavoriteLocation(Location location) async {
+    await _storageService.saveFavoriteLocation(location);
+    notifyListeners();
+  }
+
+  Future<void> removeFavoriteLocation(Location location) async {
+    await _storageService.removeFavoriteLocation(location);
+    notifyListeners();
+  }
+
+  Future<void> reorderFavoriteLocations(List<Location> locations) async {
+    await _storageService.reorderFavoriteLocations(locations);
+    notifyListeners();
+  }
+
+  Future<void> updateLocationMetadata(Location location) async {
+    await _storageService.updateLocationMetadata(location);
+    notifyListeners();
+  }
+
+  Future<bool> isLocationFavorite(Location location) async {
+    final favorites = await getFavoriteLocations();
+    return favorites.any((fav) => fav == location);
+  }
+
+  // Multi-location weather data
+  Future<void> loadWeatherForFavoriteLocations() async {
+    final favorites = await getFavoriteLocations();
+    if (favorites.isEmpty) return;
+
+    for (final location in favorites) {
+      try {
+        final data = await _weatherService.getCompleteWeatherData(
+          location.latitude,
+          location.longitude,
+        );
+
+        _locationWeatherData[location.name] = {
+          'current': data['current'] as Weather,
+          'hourly': data['hourly'] as List<HourlyForecast>,
+          'daily': data['daily'] as List<DailyForecast>,
+          'location': location,
+        };
+      } catch (e) {
+        // Continue with other locations even if one fails
+        debugPrint('Failed to load weather for ${location.name}: $e');
+      }
+    }
+
+    notifyListeners();
+  }
+
+  Map<String, dynamic>? getWeatherDataForLocation(Location location) {
+    return _locationWeatherData[location.name];
+  }
+
+  Map<String, Map<String, dynamic>> get allLocationWeatherData => _locationWeatherData;
+
+  Future<void> loadWeatherForComparison(List<Location> locations) async {
+    _locationWeatherData.clear();
+
+    for (final location in locations) {
+      try {
+        final data = await _weatherService.getCompleteWeatherData(
+          location.latitude,
+          location.longitude,
+        );
+
+        _locationWeatherData[location.name] = {
+          'current': data['current'] as Weather,
+          'hourly': data['hourly'] as List<HourlyForecast>,
+          'daily': data['daily'] as List<DailyForecast>,
+          'location': location,
+        };
+      } catch (e) {
+        // Continue with other locations even if one fails
+        debugPrint('Failed to load weather for ${location.name}: $e');
+      }
+    }
+
+    notifyListeners();
   }
 
   void clearError() {
