@@ -24,6 +24,9 @@ dependencies:
   # State management
   provider: ^6.1.1
 
+  # Opening the project page and release notes from the app
+  url_launcher: ^6.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

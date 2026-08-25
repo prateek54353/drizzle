@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/location.dart';
 
 class LocationHeader extends StatelessWidget {
@@ -21,9 +22,10 @@ class LocationHeader extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.location_on,
             size: 20,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -35,19 +37,28 @@ class LocationHeader extends StatelessWidget {
           ),
           if (onLocationsPressed != null)
             IconButton(
-              icon: const Icon(Icons.bookmark_border),
+              icon: Icon(
+                Icons.bookmark_border,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               onPressed: onLocationsPressed,
               tooltip: 'Saved Locations',
             ),
           if (onSearchPressed != null)
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: Icon(
+                Icons.search,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               onPressed: onSearchPressed,
               tooltip: 'Search',
             ),
           if (onSettingsPressed != null)
             IconButton(
-              icon: const Icon(Icons.settings),
+              icon: Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               onPressed: onSettingsPressed,
               tooltip: 'Settings',
             ),

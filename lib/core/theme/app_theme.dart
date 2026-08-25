@@ -11,9 +11,7 @@ class AppTheme {
       scaffoldBackgroundColor: const Color(0xFFFAFAFA),
       cardTheme: CardThemeData(
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         surfaceTintColor: Colors.transparent,
       ),
       appBarTheme: const AppBarTheme(
@@ -22,39 +20,19 @@ class AppTheme {
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
       ),
-      iconTheme: const IconThemeData(
-        size: 24,
-      ),
+      iconTheme: const IconThemeData(size: 24, color: Color(0xFF1B1B1F)),
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: 57,
           fontWeight: FontWeight.w400,
           letterSpacing: -0.25,
         ),
-        displayMedium: TextStyle(
-          fontSize: 45,
-          fontWeight: FontWeight.w400,
-        ),
-        displaySmall: TextStyle(
-          fontSize: 36,
-          fontWeight: FontWeight.w400,
-        ),
-        headlineLarge: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.w600,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.w600,
-        ),
-        headlineSmall: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-        ),
-        titleLarge: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w500,
-        ),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w400),
+        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
+        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
         titleMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
@@ -109,9 +87,7 @@ class AppTheme {
       scaffoldBackgroundColor: const Color(0xFF121212),
       cardTheme: CardThemeData(
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         surfaceTintColor: Colors.transparent,
       ),
       appBarTheme: const AppBarTheme(
@@ -119,40 +95,21 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Color(0xFFE6E1E5)),
       ),
-      iconTheme: const IconThemeData(
-        size: 24,
-      ),
+      iconTheme: const IconThemeData(size: 24, color: Color(0xFFE6E1E5)),
       textTheme: const TextTheme(
         displayLarge: TextStyle(
           fontSize: 57,
           fontWeight: FontWeight.w400,
           letterSpacing: -0.25,
         ),
-        displayMedium: TextStyle(
-          fontSize: 45,
-          fontWeight: FontWeight.w400,
-        ),
-        displaySmall: TextStyle(
-          fontSize: 36,
-          fontWeight: FontWeight.w400,
-        ),
-        headlineLarge: TextStyle(
-          fontSize: 32,
-          fontWeight: FontWeight.w600,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.w600,
-        ),
-        headlineSmall: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-        ),
-        titleLarge: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w500,
-        ),
+        displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.w400),
+        displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
+        headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+        headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
         titleMedium: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,

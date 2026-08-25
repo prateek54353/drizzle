@@ -9,9 +9,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: Consumer<WeatherProvider>(
         builder: (context, provider, child) {
           return ListView(
@@ -53,18 +51,9 @@ class SettingsScreen extends StatelessWidget {
                           value: 'kmh',
                           label: Text('km/h'),
                         ),
-                        ButtonSegment<String>(
-                          value: 'mph',
-                          label: Text('mph'),
-                        ),
-                        ButtonSegment<String>(
-                          value: 'ms',
-                          label: Text('m/s'),
-                        ),
-                        ButtonSegment<String>(
-                          value: 'kn',
-                          label: Text('kn'),
-                        ),
+                        ButtonSegment<String>(value: 'mph', label: Text('mph')),
+                        ButtonSegment<String>(value: 'ms', label: Text('m/s')),
+                        ButtonSegment<String>(value: 'kn', label: Text('kn')),
                       ],
                       selected: {provider.windSpeedUnit},
                       onSelectionChanged: (selected) {
@@ -142,6 +131,8 @@ class SettingsScreen extends StatelessWidget {
                       title: const Text('Drizzle'),
                       subtitle: const Text('Version 1.0.0'),
                       leading: const Icon(Icons.info_outline),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => Navigator.pushNamed(context, '/about'),
                     ),
                   ),
                   Card(
@@ -202,10 +193,7 @@ class _Section extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
-  const _Section({
-    required this.title,
-    required this.children,
-  });
+  const _Section({required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {
@@ -217,9 +205,9 @@ class _Section extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.w600,
-                ),
+              color: Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
         ...children,
@@ -242,10 +230,7 @@ class _SettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 4,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -253,24 +238,20 @@ class _SettingTile extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+              style: Theme.of(context).textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 4),
             Text(
               subtitle,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 16),
 
             // Give the segmented control the entire available width.
-            SizedBox(
-              width: double.infinity,
-              child: trailing,
-            ),
+            SizedBox(width: double.infinity, child: trailing),
           ],
         ),
       ),

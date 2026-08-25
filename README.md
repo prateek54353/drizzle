@@ -162,6 +162,22 @@ flutter build ios --release
 flutter build web --release
 ```
 
+## Publishing a release
+
+Push a tag such as `v1.0.1` to publish a GitHub release. The release workflow
+builds signed Android APKs for each ABI and an unsigned iOS IPA independently,
+then attaches every successful artifact even when the other platform fails.
+
+Before the first Android release, add these GitHub Actions secrets:
+
+- `ANDROID_KEYSTORE_BASE64` — base64-encoded upload keystore
+- `ANDROID_KEYSTORE_PASSWORD`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
+
+The Android artifacts are suitable for IzzyOnDroid after the corresponding tag
+has been reviewed and the attached APK for the target ABI is selected.
+
 ## Configuration
 
 ### Platform Permissions

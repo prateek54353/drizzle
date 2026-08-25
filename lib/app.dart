@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'core/theme/app_theme.dart';
 import 'providers/weather_provider.dart';
 import 'screens/home_screen.dart';
@@ -7,6 +8,7 @@ import 'screens/search_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/locations_screen.dart';
 import 'screens/comparison_screen.dart';
+import 'screens/about_screen.dart';
 
 class DrizzleApp extends StatelessWidget {
   const DrizzleApp({super.key});
@@ -32,19 +34,20 @@ class DrizzleApp extends StatelessWidget {
                         const SearchScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      const begin = Offset(1.0, 0.0);
-                      const end = Offset.zero;
-                      const curve = Curves.ease;
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
 
-                      var tween = Tween(begin: begin, end: end).chain(
-                        CurveTween(curve: curve),
-                      );
+                          var tween = Tween(
+                            begin: begin,
+                            end: end,
+                          ).chain(CurveTween(curve: curve));
 
-                      return SlideTransition(
-                        position: animation.drive(tween),
-                        child: child,
-                      );
-                    },
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
                   );
                 case '/settings':
                   return PageRouteBuilder(
@@ -52,19 +55,20 @@ class DrizzleApp extends StatelessWidget {
                         const SettingsScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      const begin = Offset(0.0, 1.0);
-                      const end = Offset.zero;
-                      const curve = Curves.ease;
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
 
-                      var tween = Tween(begin: begin, end: end).chain(
-                        CurveTween(curve: curve),
-                      );
+                          var tween = Tween(
+                            begin: begin,
+                            end: end,
+                          ).chain(CurveTween(curve: curve));
 
-                      return SlideTransition(
-                        position: animation.drive(tween),
-                        child: child,
-                      );
-                    },
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
                   );
                 case '/locations':
                   return PageRouteBuilder(
@@ -72,23 +76,28 @@ class DrizzleApp extends StatelessWidget {
                         const LocationsScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      const begin = Offset(0.0, 1.0);
-                      const end = Offset.zero;
-                      const curve = Curves.ease;
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
 
-                      var tween = Tween(begin: begin, end: end).chain(
-                        CurveTween(curve: curve),
-                      );
+                          var tween = Tween(
+                            begin: begin,
+                            end: end,
+                          ).chain(CurveTween(curve: curve));
 
-                      return SlideTransition(
-                        position: animation.drive(tween),
-                        child: child,
-                      );
-                    },
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
                   );
                 case '/compare':
                   return MaterialPageRoute(
                     builder: (context) => const ComparisonScreen(),
+                  );
+                case '/about':
+                  return MaterialPageRoute(
+                    builder: (context) => const AboutScreen(),
                   );
                 default:
                   return MaterialPageRoute(
